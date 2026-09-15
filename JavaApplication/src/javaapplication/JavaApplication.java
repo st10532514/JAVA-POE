@@ -35,15 +35,39 @@ public class JavaApplication {
         firstName = objScanner.nextLine();
         
         // Username registration
-        boolean blnUsernameValid = false;
-        while (!blnUsernameValid) {
+        boolean usernameValid = false;
+        while (!usernameValid) {
             System.out.print("Enter username: ");
             username = objScanner.nextLine();
-            blnUsernameValid = objLogin.checkUserName(username);
-            if (!blnUsernameValid) {
+            usernameValid = objLogin.checkUserName(username);
+            if (!usernameValid) {
                 System.out.println("Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.");
             }
         }
+        
+        // Password registration
+        boolean passwordValid = false;
+        while (!passwordValid) {
+            System.out.print("Enter password: ");
+            password = objScanner.nextLine();
+            passwordValid = objLogin.checkPasswordComplexity(password);
+            if (!passwordValid) {
+                System.out.println("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.");
+            }
+        }
+        
+        // Cellphone registration
+        boolean phoneValid = false;
+        while (!phoneValid) {
+            System.out.print("Please enter your registered South African number (with the country code: +27): ");
+            cellPhoneNumber = objScanner.nextLine();
+            phoneValid = objLogin.checkCellPhoneNumber(cellPhoneNumber);
+            if (!phoneValid) {
+                System.out.println("Cell phone number incorrectly formatted or does not contain international code.");
+            }
+        }
+        
+        // Register the user and display the exact required message
     }
     
 }
