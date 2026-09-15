@@ -17,10 +17,10 @@ public class Login {
     private String strRegisteredFirstName;
     private String strRegisteredLastName;
     
-    public boolean checkUserName(String strUsername) {
+    public boolean checkUserName(String username) {
         boolean result = false;
 
-        if (strUsername != null && strUsername.contains("_") && strUsername.length() <= 5) {
+        if (username != null && username.contains("_") && username.length() <= 5) {
             result = true;
         } else {
             result = false;
@@ -29,35 +29,35 @@ public class Login {
         return result;
     }
     
-    public boolean checkPasswordComplexity(String strPassword) {
-        boolean blnHasMinLength = false;
-        boolean blnHasCapital = false;
-        boolean blnHasNumber = false;
-        boolean blnHasSpecialChar = false;
+    public boolean checkPasswordComplexity(String password) {
+        boolean hasMinLength = false;
+        boolean hasCapital = false;
+        boolean hasNumber = false;
+        boolean hasSpecialChar = false;
         boolean result = false;
 
-        if (strPassword != null && strPassword.length() >= 8) {
-            blnHasMinLength = true;
+        if (password != null && password.length() >= 8) {
+            hasMinLength = true;
         }
 
-        if (strPassword != null) {
-            int intIndex = 0;
-            while (intIndex < strPassword.length()) {
-                char chrCurrent = strPassword.charAt(intIndex);
+        if (password != null) {
+            int index = 0;
+            while (index < password.length()) {
+                char chrCurrent = password.charAt(index);
 
                 if (Character.isUpperCase(chrCurrent)) {
-                    blnHasCapital = true;
+                    hasCapital = true;
                 } else if (Character.isDigit(chrCurrent)) {
-                    blnHasNumber = true;
+                    hasNumber = true;
                 } else if (!Character.isLetterOrDigit(chrCurrent)) {
-                    blnHasSpecialChar = true;
+                    hasSpecialChar = true;
                 }
 
-                intIndex++;
+                index++;
             }
         }
 
-        if (blnHasMinLength && blnHasCapital && blnHasNumber && blnHasSpecialChar) {
+        if (hasMinLength && hasCapital && hasNumber && hasSpecialChar) {
             result = true;
         } else {
             result = false;
@@ -66,17 +66,68 @@ public class Login {
         return result;
     }
     
-    public boolean checkCellPhoneNumber(String strCellPhoneNumber) {
+    public boolean checkCellPhoneNumber(String cellPhoneNumber) {
         boolean result = false;
-        String strPattern = "^\\+27[0-9]{9}$";
+        String pattern = "^\\+27[0-9]{9}$";
 
-        if (strCellPhoneNumber != null && Pattern.matches(strPattern, strCellPhoneNumber)) {
+        if (cellPhoneNumber != null && Pattern.matches(pattern, cellPhoneNumber)) {
             result = true;
         } else {
             result = false;
         }
 
         return result;
+    }
+    
+    public String registerUser(String username, String password, String cellPhoneNumber,
+                                String firstName, String lastName) {
+        String strMessage;
+        boolean usernameValid = checkUserName(username);
+        boolean passwordValid = checkPasswordComplexity(password);
+        boolean cellValid = checkCellPhoneNumber(cellPhoneNumber);
+
+        if (!usernameValid) {
+            strMessage = "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";
+        } else if (!passwordValid) {
+            strMessage = "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
+        } else if (!cellValid) {
+            strMessage = "Cell phone number incorrectly formatted or does not contain international code.";
+        } else {
+            strRegisteredUsername = username;
+            strRegisteredPassword = password;
+            strRegisteredCellPhoneNumber = cellPhoneNumber;
+            strRegisteredFirstName = firstName;
+            strRegisteredLastName = lastName;
+            strMessage = "Username successfully captured.\nPassword successfully captured.\nCell phone number successfully added.\nYou have registered successfully.";
+        }
+
+        return strMessage;
+    }
+    
+    public boolean loginUser(String username, String password) {
+        boolean result = false;
+
+        if (strRegisteredUsername != null && strRegisteredPassword != null
+                && strRegisteredUsername.equals(username)
+                && strRegisteredPassword.equals(password)) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+    
+    public String returnLoginStatus(boolean successLogin, String firstName, String lastName) {
+        String message;
+
+        if (successLogin) {
+            message = "Welcome " + firstName + ", " + lastName + " it is great to see you again.";
+        } else {
+            message = "Username or password incorrect, please try again.";
+        }
+
+        return message;
     }
     
 }
