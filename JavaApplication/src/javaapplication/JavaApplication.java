@@ -22,7 +22,7 @@ public class JavaApplication {
         
         // Declare user information
         String firstName;
-        String lastName;
+        String lastName = "";
         String username = "";
         String password = "";
         String cellPhoneNumber = "";
@@ -68,6 +68,20 @@ public class JavaApplication {
         }
         
         // Register the user and display the exact required message
+        String registerMessage = objLogin.registerUser(username, password, cellPhoneNumber, firstName, lastName);
+        System.out.println(registerMessage);
+        
+        // Login flow
+        System.out.print("Enter username to login: ");
+        String loginUsername = objScanner.nextLine();
+        System.out.print("Enter password to login: ");
+        String loginPassword = objScanner.nextLine();
+
+        boolean successLogin = objLogin.loginUser(loginUsername, loginPassword);
+        String loginStatus = objLogin.returnLoginStatus(successLogin, firstName, lastName);
+        System.out.println(loginStatus);
+
+        objScanner.close();
     }
     
 }
