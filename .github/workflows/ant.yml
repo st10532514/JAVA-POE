@@ -31,11 +31,12 @@ jobs:
           java-version: '21'
 
       # 3. Ant is NOT bundled with the JDK on GitHub runners, so install it.
-      #    ant-junit is needed so Ant can run the <junit> task.
+      #    ant-optional provides ant-junit.jar so Ant can run the <junit> task
+      #    (there is no separate "ant-junit" package on Ubuntu 24.04).
       - name: Install Ant
         run: |
           sudo apt-get update
-          sudo apt-get install -y ant ant-junit
+          sudo apt-get install -y ant ant-optional
 
       # 4. NetBeans keeps its JUnit jars inside the IDE, which the runner does not have.
       #    Download JUnit 4 and Hamcrest so the tests can compile and run.
