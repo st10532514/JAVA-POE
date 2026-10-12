@@ -23,12 +23,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Install JDK 21 (matches javac.source / javac.target in project.properties)
-      - name: Set up JDK 21
+      # 2. Install JDK 25 (should match javac.source / javac.target in project.properties)
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
 
       # 3. Ant is NOT bundled with the JDK on GitHub runners, so install it.
       #    ant-optional provides ant-junit.jar so Ant can run the <junit> task
